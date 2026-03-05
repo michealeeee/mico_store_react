@@ -1,0 +1,106 @@
+ header {
+    background: linear-gradient(135deg, #020024, #090979, #00d4ff);
+    width: 100%;
+    top: 0;
+    border-radius: 10px;
+    padding: 30px;
+    position: fixed;
+    z-index: 20;   
+}
+
+ header ul{
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    justify-content: right;
+}
+header ul a{
+text-decoration: none;
+color: white;
+font-size: 1.5rem;
+font-weight: bold;
+}
+header .logo img{
+height: 5rem;
+left: 10px;
+top: 5px;
+border-radius: 10px;
+position: absolute;
+}
+
+header ul a:hover{
+text-decoration: none;
+color: red;
+}
+.logo a{
+    text-decoration: none;
+    color: azure;
+    font-size: 2rem;
+    font-weight: bold;
+    position: absolute;
+    bottom: 20px;
+}
+.logo a:hover{
+    color: red;
+}
+
+.menu_btn {
+    color: white;
+    float: right;
+    font-size: 2rem;
+     display: none; 
+}
+.mobile_menu{
+     position: absolute;
+     display: none;
+    right: 2rem;
+    background: linear-gradient(135deg, #020024, #090979, #00d4ff);
+    border-radius: 10px;
+    width: 200px;
+    top: 95px;
+    transition: height 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 0px;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    right: 0;
+}
+.mobile_menu li{
+    list-style: none;
+    padding: 0.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+   
+}
+
+.mobile_menu.open{  
+    height: 160px;
+}
+
+.mobile_menu  li a{
+text-decoration: none;
+color: white;
+display: block;
+padding: 1px 50px;
+}
+.mobile_menu a:hover{
+    color: red;
+    background: linear-gradient(135deg, #5e829a,#456e89);
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+@media(max-width: 992px){
+    .desktop_menu{
+        display: none;
+    }
+    .menu_btn{
+        display: block;
+        cursor: pointer;
+    }
+    .mobile_menu{
+        display: block;
+    }
+}

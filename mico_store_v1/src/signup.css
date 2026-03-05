@@ -1,0 +1,118 @@
+*{
+    font-family: 'Open Sans', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+}
+input{
+    outline: none;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 12px 15px;
+}
+.form_logo a{
+    text-decoration: none;
+    color: azure;
+    font-size: 2rem;
+    font-weight: bold;
+    position: absolute;
+    bottom: 30px;
+    
+}
+
+.sbtn{
+    justify-content: center;
+    text-align: center;
+}
+
+.form_logo a:hover{
+    color: red;
+}
+
+select{
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 12px 25px;
+    color: black;
+}
+.signup{
+    width: 600px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-radius: 15px;
+    /* background-color: rgba(0, 0, 0, 0.12);  */
+    padding: 20px 50px;
+    margin-top: 7rem;
+    overflow: hidden;
+    background: #ffffff;
+}
+.row{
+    display: flex;
+    gap: 0.3rem;
+    flex-direction: column;
+    margin-bottom: 20px;
+    position: relative;
+}
+.row i{
+    position: absolute;
+    top: 70%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+#icon_gender{
+    position: absolute;
+    top: 70%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+
+.btn {
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: larger;
+    background-color: #4A90E2;
+    padding: 12px 25px;
+    color: white;
+    cursor: pointer;
+
+}
+.row .btn:hover{
+ background-color: #1F6FCC;  
+ transform: translateY(-4px) scale(1.03);
+transition: all 0.3s ease;
+
+}
+
+@media(max-width: 992px){
+    .row{
+        justify-content: left;
+        align-items: left;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.1rem;
+    }
+    .form_logo a{
+        font-size: 1rem;
+    }
+    .form_menu a{
+        font-size: 1rem;
+    }
+}
+
+small{
+    color: red;
+    text-align: right;
+}
