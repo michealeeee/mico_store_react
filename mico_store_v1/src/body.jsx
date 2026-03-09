@@ -1,9 +1,12 @@
 function Body(){
     return(
-        <div class='mike'>
+        <div>
         <section id="home">
         <div class="content">
-          <h1> <strong>Smart Shopping Made Simple </strong> </h1>
+          <h1> <strong>
+          <br/>
+          <br/>
+          <br/>Smart Shopping Made Simple </strong> </h1>
           <p> <strong> MICO Store is your one-stop e-commerce platform for quality products, seamless ordering, and fast delivery — all in one place.</strong> </p>
         <div class="div_btn">
           <a href="forms.html" >Get Started</a>

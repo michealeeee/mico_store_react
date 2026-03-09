@@ -7,14 +7,10 @@
 html{
     scroll-behavior: smooth;
 }
-section{
-  width: 100%;
-  display: flex;
-  padding-right: 10px;
-}
+
 
 #home{
-    width: 1580px;
+    width: 100%;
     height: 750px;
     background-image: url("ecom.jpg");
     background-repeat: no-repeat;

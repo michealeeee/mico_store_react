@@ -2,31 +2,31 @@ import {Link} from "react-router-dom";
 
 function Signup(){
     return(
-  <div>  
+  <div className='signup_body'>  
  <header>
-      <div classname="form_logo">
-        <link to="/App">Registration Form</link>
+      <div className="form_logo">
+        <Link to="/">Registration Form</Link>
       </div>
-      <nav classname="form_menu">
+      <nav className="form_menu">
         <ul>
-          <li> <link to="/App">Home</link></li>
-          <li> <link to="#">Sign in</link></li>
+          <li> <Link to="/">Home</Link></li>
+          <li> <Link to="/login">Sign in</Link></li>
         </ul>
       </nav> 
 
 
     </header>
-    <form classname="signup" action="">
-        <div classname="row">
+    <form className="signup" action="">
+        <div className="row">
 
 <label>Full Name:</label>
-<i classname="fa fa-user"></i>
+<i className="fa fa-user"></i>
     <input type="text" id="name" name="name" placeholder="Enter your Name" required />
     <small id="fullnameError"></small>
         </div>
-    <div classname="row">
+    <div className="row">
 <label>Gender:</label>
- <i id="icon_gender" classname="fa fa-transgender"></i>  
+ <i id="icon_gender" className="fa fa-transgender"></i>  
 <select name="gender" id="gender">
   <option value="select gender">Select Gender</option>
   <option value="Male" >Male</option> 
@@ -35,32 +35,32 @@ function Signup(){
 <small id="Gendererror"></small>
     </div>
 
-    <div classname="row">
+    <div className="row">
  <label>Email:</label>
- <i classname="fa-solid fa-envelope"></i>
+ <i className="fa-solid fa-envelope"></i>
     <input type="text" id="email" name="email"  placeholder="email@gmail.com" />
     <small id="emailerror"></small>
     </div>
-<div classname="row">
+<div className="row">
         <label>Mobile:</label> 
-    <input  type="tel" onblur="check_phone_number()"  classname="Phone" id="phone" name="phone" />
+    <input  type="tel" onblur="check_phone_number()"  className="Phone" id="phone" name="phone" />
     <small id="NumberError"></small>
     </div>
     
-    <div classname="row">
+    <div className="row">
         <label>Enter New password:</label>
-        <i classname="fa-solid fa-eye-slash" id="eye"></i>
-    <input  type="password" classname="password" id="password" name="password" data="mtn" />
+        <i className="fa-solid fa-eye-slash" id="eye"></i>
+    <input  type="password" className="password" id="password" name="password" data="mtn" />
     <small id="PasswordError"></small>
     </div>
-    <div classname="row">
+    <div className="row">
     <label>Confirm password:</label>
-    <i classname="fa-solid fa-eye-slash" id="eye2"></i>
-    <input  type="password"  classname="cpassword" id="cpassword" name="cpassword" />
+    <i className="fa-solid fa-eye-slash" id="eye2"></i>
+    <input  type="password"  className="cpassword" id="cpassword" name="cpassword" />
     <small id="cPasswordError"></small>
     </div>
-<div classname="sbtn">
-    <a href="#" classname="btn"><i classname="fa-solid fa-envelope"></i>Submit</a>
+<div className="sbtn">
+    <a href="#" className="btn"><i className="fa-solid fa-envelope"></i>Submit</a>
 
 </div>
         
@@ -70,4 +70,4 @@ function Signup(){
     
     )
 }
-export default Signup
+export default Signup;

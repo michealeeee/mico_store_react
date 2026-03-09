@@ -1,17 +1,17 @@
-
+import {Link} from "react-router-dom";
 function Header(){
     return(
        
         <header>
       <div class="logo">-
-        <a href="#home">MICO</a>
+        <Link to="/">MICO</Link>
       </div>
       <nav class="desktop_menu">
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contact Us</a></li>
-          <li><a href="forms.html">Sign up</a></li>
+          <li><Link to="/signup">Sign up</Link></li>
           
 
         </ul>
@@ -30,4 +30,4 @@ function Header(){
     
     )
 }
-export default Header
+export default Header;
