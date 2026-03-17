@@ -35,6 +35,7 @@ function Signup() {
   const validate = () => {
     let newerror = {};
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
     if (formData.name.trim() === "") {
       newerror.name = "Fullname is required";
     }
@@ -45,7 +46,20 @@ function Signup() {
     if (!emailPattern.test(formData.email)) {
       newerror.email = "Please enter a valid email address";
     }
+    if (formData.phone.trim() === "") {
+      newerror.phone = "Please enter a valid phone number";
+    }
+    if (!passwordPattern.test(formData.password) ) {
+      newerror.password = "Please enter a valid password";
+    }
+    if (!passwordPattern.test(FormData.cpassword) ) {
+      newerror.cpassword = "Please enter a valid password";
+    }
+    if (formData.password!==formData.cpassword){
+       newerror.cpassword = "Both password are not the same"; 
+    }
     seterror(newerror);
+    
   };
 
   return (
@@ -115,7 +129,7 @@ function Signup() {
             ref={phoneRef}
           />
        
-          <small id="NumberError"></small>
+          <small id="NumberError">{error.phone}</small>
         </div>
 
         <div className="row">
@@ -129,7 +143,7 @@ function Signup() {
             name="password"
             data="mtn"
           />
-          <small id="PasswordError"></small>
+          <small id="PasswordError">{error.password}</small>
         </div>
         <div className="row">
           <label>Confirm password:</label>
@@ -141,7 +155,7 @@ function Signup() {
             id="cpassword"
             name="cpassword"
           />
-          <small id="cPasswordError"></small>
+          <small id="cPasswordError">{error.cpassword}</small>
         </div>
         <div className="sbtn">
           <a href="#" onClick={validate} className="btn">
