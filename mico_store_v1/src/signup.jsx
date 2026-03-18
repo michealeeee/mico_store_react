@@ -5,37 +5,55 @@ import intlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.css";
 
 function Signup() {
-    const phoneRef = useRef(null);
+//     const phoneRef = useRef(null);
+    
+//   useEffect(() => {
 
-  useEffect(() => {
-    const iti = intlTelInput(phoneRef.current, {
-      initialCountry: "gh",
-      separateDialCode: true,
-      preferredCountries: ["ng", "gh", "us", "gb"],
-      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.7/build/js/utils.js",
-    });
+//      const iti = intlTelInput(phoneRef.current, {
+//       initialCountry: "gh",
+//       separateDialCode: true,
+//       preferredCountries: ["ng", "gh", "us", "gb"],
+//       utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.7/build/js/utils.js",
+//     });
 
-    return () => iti.destroy();
-  }, []);
+//     return () => iti.destroy();
+//   }, []);
+const phoneRef = useRef(null);
+const itiRef = useRef(null);
 
+useEffect(() => {
+  itiRef.current = intlTelInput(phoneRef.current, {
+    initialCountry: "gh",
+    separateDialCode: true,
+    preferredCountries: ["ng", "gh", "us", "gb"],
+    utilsScript:
+      "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.7/build/js/utils.js",
+  });
+
+  return () => itiRef.current.destroy();
+}, []);
   const [formData, setformData] = useState({
     name: "",
     gender: "",
     email: "",
-    phone: "",
+    tel: "",
     password: "",
-    cpassword: "",
+    cpassword: ""
   });
   const [error, seterror] = useState({});
   const mikechange = (e) => {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
+    console.log(formData);
     error[name] = "";
   };
   const validate = () => {
     let newerror = {};
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+    const phonenumber = itiRef.current.getNumber();
+    alert(phonenumber);
+    formData.tel = phonenumber;
     if (formData.name.trim() === "") {
       newerror.name = "Fullname is required";
     }
@@ -46,16 +64,14 @@ function Signup() {
     if (!emailPattern.test(formData.email)) {
       newerror.email = "Please enter a valid email address";
     }
-    if (formData.phone.trim() === "") {
-      newerror.phone = "Please enter a valid phone number";
+    if (formData.tel.trim() === "") {
+      newerror.tel = "Please enter a valid phone number";
     }
     if (!passwordPattern.test(formData.password) ) {
       newerror.password = "Please enter a valid password";
     }
-    if (!passwordPattern.test(FormData.cpassword) ) {
-      newerror.cpassword = "Please enter a valid password";
-    }
-    if (formData.password!==formData.cpassword){
+
+    if (formData.password !== formData.cpassword){
        newerror.cpassword = "Both password are not the same"; 
     }
     seterror(newerror);
@@ -121,15 +137,16 @@ function Signup() {
         <div className="row">
           <label>Mobile:</label>
           <input
-            type="tel"
+            type="tel" 
+            value = {formData.tel}
             onChange={mikechange}
             className="Phone"
             id="phone"
-            name="phone"
+            name="tel"
             ref={phoneRef}
           />
        
-          <small id="NumberError">{error.phone}</small>
+          <small id="NumberError">{error.tel}</small>
         </div>
 
         <div className="row">
