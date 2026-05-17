@@ -3,68 +3,67 @@ import { useState } from "react";
 import { useEffect, useRef } from "react";
 import intlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.css";
+import "intl-tel-input/build/js/utils";
+import "intl-tel-input/build/css/intlTelInput.css";
 
 function Signup() {
-//     const phoneRef = useRef(null);
-    
-//   useEffect(() => {
 
-//      const iti = intlTelInput(phoneRef.current, {
-//       initialCountry: "gh",
-//       separateDialCode: true,
-//       preferredCountries: ["ng", "gh", "us", "gb"],
-//       utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.7/build/js/utils.js",
-//     });
-
-//     return () => iti.destroy();
-//   }, []);
 const phoneRef = useRef(null);
 const itiRef = useRef(null);
-
+const [loading, setLoading] = useState(false);
+const [pwd, setpwd] = useState(false);
+const [pwd2, setpwd2] = useState(false);
 useEffect(() => {
   itiRef.current = intlTelInput(phoneRef.current, {
     initialCountry: "gh",
     separateDialCode: true,
     preferredCountries: ["ng", "gh", "us", "gb"],
-    utilsScript:
-      "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.7/build/js/utils.js",
+    loadUtils: () => import("intl-tel-input/build/js/utils"),
   });
 
   return () => itiRef.current.destroy();
 }, []);
   const [formData, setformData] = useState({
     name: "",
-    gender: "",
+    gender_: "",
     email: "",
     tel: "",
     password: "",
     cpassword: ""
   });
+  
   const [error, seterror] = useState({});
+  const pwdchange = () => {
+    if (pwd === true){
+      setpwd(false);
+    }
+    else{
+      setpwd(true);
+    }
+  }
   const mikechange = (e) => {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
     console.log(formData);
     error[name] = "";
   };
-  const validate = () => {
+  const validate =async () => {
     let newerror = {};
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+   const passwordPattern = /^.{8,}$/;
     const phonenumber = itiRef.current.getNumber();
-    alert(phonenumber);
-    formData.tel = phonenumber;
+    setformData({ ...formData, ["tel"]: phonenumber });
     if (formData.name.trim() === "") {
       newerror.name = "Fullname is required";
     }
-    if (formData.gender.trim() === "" || formData.gender === "Select Gender") {
-      newerror.gender = "Gender is required";
+    if (formData.gender_.trim() === "" || formData.gender_ === "Select Gender") {
+      newerror.gender_ = "Gender is required";
     }
 
     if (!emailPattern.test(formData.email)) {
       newerror.email = "Please enter a valid email address";
     }
-    if (formData.tel.trim() === "") {
+    if (!itiRef.current.isValidNumber()) {
       newerror.tel = "Please enter a valid phone number";
     }
     if (!passwordPattern.test(formData.password) ) {
@@ -75,6 +74,39 @@ useEffect(() => {
        newerror.cpassword = "Both password are not the same"; 
     }
     seterror(newerror);
+    if (Object.keys(newerror).length===0){
+        try{
+          setLoading(true);
+            const response = await fetch("https://mico-store-be-1.onrender.com/mico/user/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await response.json();
+    if(response.ok){
+      setformData({ name: "",
+    gender_: "Select Gender",
+    email: "",
+    tel: "",
+    password: "",
+    cpassword: ""
+  });
+  itiRef.current.setNumber("");
+   alert("registration successful");
+}
+    console.log(result);
+        }
+        catch(error){
+            alert(error);
+        }
+        finally{
+           setLoading(false);
+        }
+        
+    }
     
   };
 
@@ -106,6 +138,7 @@ useEffect(() => {
             onChange={mikechange}
             id="name"
             name="name"
+            value={formData.name}
             placeholder="Enter your Name"
             required
           />
@@ -114,12 +147,12 @@ useEffect(() => {
         <div className="row">
           <label>Gender:</label>
           <i id="icon_gender" className="fa fa-transgender"></i>
-          <select name="gender" onChange={mikechange} id="gender">
+          <select name="gender_" onChange={mikechange} id="gender" value={formData.gender_}>
             <option value="select gender">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <small id="Gendererror">{error.gender}</small>
+          <small id="Gendererror">{error.gender_}</small>
         </div>
 
         <div className="row">
@@ -130,6 +163,7 @@ useEffect(() => {
             onChange={mikechange}
             id="email"
             name="email"
+            value={formData.email}
             placeholder="email@gmail.com"
           />
           <small id="emailerror">{error.email}</small>
@@ -138,7 +172,6 @@ useEffect(() => {
           <label>Mobile:</label>
           <input
             type="tel" 
-            value = {formData.tel}
             onChange={mikechange}
             className="Phone"
             id="phone"
@@ -151,13 +184,14 @@ useEffect(() => {
 
         <div className="row">
           <label>Enter New password:</label>
-          <i className="fa-solid fa-eye-slash" id="eye"></i>
+          <i onClick={pwdchange} className={pwd?"fa-solid fa-eye":"fa-solid fa-eye-slash"} id="eye"></i>
           <input
-            type="password"
+            type={pwd?"text":"password"}
             onChange={mikechange}
             className="password"
             id="password"
             name="password"
+            value={formData.password}
             data="mtn"
           />
           <small id="PasswordError">{error.password}</small>
@@ -171,14 +205,23 @@ useEffect(() => {
             className="cpassword"
             id="cpassword"
             name="cpassword"
+            value={formData.cpassword}
           />
           <small id="cPasswordError">{error.cpassword}</small>
         </div>
         <div className="sbtn">
           <a href="#" onClick={validate} className="btn">
-            <i className="fa-solid fa-envelope"></i>Submit
+            <i className="fa-solid fa-envelope"></i>{
+              loading ? "Submiting.....": "Submit"
+            }
           </a>
         </div>
+        {loading ? (
+    <div className="spinner-overlay">
+    <div className="spinner"></div>
+  </div>
+):""}
+
       </form>
     </div>
   );
